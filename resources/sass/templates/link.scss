@@ -1,0 +1,29 @@
+.link {
+    font-size: 18px;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: $transition;
+    color: #4b5563;
+    line-height: 24px;
+    display: inline-flex;
+    padding-left: 12px;
+    position: relative;
+    text-align: right;
+    &:hover {
+        text-decoration-color: #4b5563;
+        color: #4b5563;
+    }
+    @include sm {
+        font-size: 16px;
+    }
+    @include xs {
+        line-height: 28px;
+    }
+    &:before {
+        content: '/';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

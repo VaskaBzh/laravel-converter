@@ -1,0 +1,32 @@
+.logo {
+    max-width: 220px;
+    min-height: 40px;
+    font-size: 36px;
+    color: #9ca3af!important;
+    position: relative;
+    text-decoration: none;
+    overflow: hidden;
+    transition: $transition;
+    &:before {
+        transition: $transition;
+        content: '';
+        position: absolute;
+        left: -20%;
+        bottom: 0;
+        width: 60%;
+        height: 2px;
+        background-color: transparent;
+        @include xs {
+            display: none;
+        }
+    }
+    &:hover {
+        @include xs {
+            color: #4b5563!important;
+        }
+        &:before {
+            transform: translateX(100%);
+            background-color: #4b5563;
+        }
+    }
+}

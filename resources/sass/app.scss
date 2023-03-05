@@ -1,0 +1,15 @@
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@import 'templates/link';
+@import 'templates/nav';
+@import 'templates/logo';
+@import 'templates/form';
+
+
+body {
+    background-color: rgb(248,244,255);
+}
