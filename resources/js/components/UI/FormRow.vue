@@ -1,7 +1,7 @@
 <template>
     <div class="form_row">
         <label v-if="this.label !== ''" :for="this.id" class="label">{{ this.label }}</label>
-        <main-input :disabled="this.disabled" v-if="this.selectObject.length === 0" @getValue="this.getValue" :id="this.id" :type="this.type" :placeholder="this.placeholder"></main-input>
+        <main-input :value="this.value" :disabled="this.disabled" v-if="this.selectObject.length === 0" @getValue="this.getValue" :id="this.id" :type="this.type" :placeholder="this.placeholder"></main-input>
         <main-select v-else @getValue="this.getValue" :values="this.selectObject" :id="this.id" :type="this.type" :placeholder="this.placeholder"></main-select>
     </div>
 </template>
@@ -20,7 +20,8 @@ export default {
         selectObject: {
             type: Array,
             default: [],
-        }
+        },
+        value: String,
     },
     name: "form-row",
     methods: {

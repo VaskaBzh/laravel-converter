@@ -1,7 +1,23 @@
 <template>
-    <textarea v-if="this.disabled && this.type === 'textarea'" disabled class="input textarea" :type="this.type" :placeholder="this.placeholder" v-model="this.value" @change="this.getValue"></textarea>
-    <textarea v-else-if="this.type === 'textarea'" class="input textarea" v-if="this.type === 'textarea'" :type="this.type" :placeholder="this.placeholder" v-model="this.value" @change="this.getValue"></textarea>
-    <input class="input" v-else :type="this.type" :placeholder="this.placeholder" v-model="this.value" @change="this.getValue">
+    <textarea
+        v-if="this.disabled && this.type === 'textarea'"
+        disabled
+        class="input textarea"
+        :type="this.type"
+        :placeholder="this.placeholder"
+        v-model="this.convertedValue"></textarea>
+    <textarea
+        v-else-if="this.type === 'textarea'"
+        class="input textarea"
+        :type="this.type"
+        :placeholder="this.placeholder"
+        v-model="this.textValue"></textarea>
+    <input
+        class="input"
+        v-else
+        :type="this.type"
+        :placeholder="this.placeholder"
+        v-model="this.textValue"/>
 </template>
 
 <script>
@@ -11,22 +27,22 @@ export default {
         type: String,
         placeholder: String,
         id: String,
+        value: String,
     },
     data() {
         return {
-            value: "",
+            textValue: "",
+            convertedValue: this.value,
         };
     },
-    mounted() {;
+    mounted() {
     },
     name: "main-input",
     watch: {
-        value(newValue, oldValue) {
+        textValue(newValue, oldValue) {
             this.$emit('getValue', newValue);
         }
     },
-    methods: {
-    }
 }
 </script>
 

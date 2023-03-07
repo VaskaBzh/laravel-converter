@@ -39,6 +39,7 @@ export default {
     mounted() {
         document.querySelector('body').addEventListener("click", this.selectHide.bind(this), true)
         this.selectOption = this.values[0].option;
+        this.$emit("getValue", this.selectOption);
     },
 }
 </script>

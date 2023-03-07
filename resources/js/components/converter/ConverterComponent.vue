@@ -1,8 +1,8 @@
 <template>
     <div class="converter">
-        <convert-form :noButton="false" @getData="this.converter"></convert-form>
+        <convert-form :select="this.select" :noButton="true" @getData="this.converter"></convert-form>
         <div class="right"></div>
-        <convert-form :converted="this.convertedValue" :noButton="true"></convert-form>
+        <convert-form :select="this.select" :converted="this.convertedValue" :disabled="true" :noButton="true"></convert-form>
     </div>
 </template>
 
@@ -11,36 +11,46 @@
         name: "converter-component",
         data() {
             return {
-                USD: 0,
-                EUR: 0,
-                GBP: 0,
                 convertedValue: 0,
+                select: [
+                    { value: 0, option: "USD", },
+                    { value: 1, option: "RUR", },
+                    { value: 0, option: "EUR", },
+                    { value: 0, option: "GBP", },
+                ],
             };
         },
         mounted() {
             axios.get("/api/get_api")
                 .then(res => {
                     Reflect.ownKeys(res.data.Valute).forEach((val) => {
-                        console.log(Reflect.get(res.data.Valute, val))
-                        if (Reflect.get(res.data.Valute, val).CharCode === "USD") {
-                            this.USD = Reflect.get(res.data.Valute, val).Value;
-                        } else if (Reflect.get(res.data.Valute, val).CharCode === "EUR") {
-                            this.EUR = Reflect.get(res.data.Valute, val).Value;
-                        } else if (Reflect.get(res.data.Valute, val).CharCode === "GBP") {
-                            this.GBP = Reflect.get(res.data.Valute, val).Value;
-                        }
+                        this.select.map(el => {
+                            if (el.option === Reflect.get(res.data.Valute, val).CharCode) {
+                                el.value = Reflect.get(res.data.Valute, val).Value;
+                            }
+                        })
                     })
                 })
-                .catch(err => {
-                    console.log(err.response);
-                })
-            axios.get("/api/user")
                 .catch(err => {
                     console.log(err.response);
                 })
         },
         methods: {
             converter(el) {
+                let value;
+                const tester = new RegExp(/\D/g);
+                if (!tester.test(el.value)) {
+                    this.select.map(sel => {
+                        if (sel.option === el.coin) {
+                            if (sel.value !== 1) {
+                                value = el.value * sel.value;
+                            } else {
+                                value = -el.value;
+                            }
+                        }
+                    })
+                    this.convertedValue = value;
+                }
             }
         }
     }
